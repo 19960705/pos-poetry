@@ -5,6 +5,7 @@ window.PosRig = (function () {
   const lcdGreen = 0x7dff6a;
 
   let renderer, scene, camera, root, pos;
+  let ambLight, fluoLight, fillLight;
   let lcdCanvas, lcdCtx, lcdTex;
   let receiptMesh, receiptTex;
   let keys = [];
@@ -321,13 +322,14 @@ window.PosRig = (function () {
     root = new THREE.Group();
     scene.add(root);
 
-    scene.add(new THREE.AmbientLight(0x8a9692, 0.78));
-    const fluo = new THREE.DirectionalLight(0xe7f3ef, 0.95);
-    fluo.position.set(-0.6, 5.4, 2.1);
-    scene.add(fluo);
-    const fill = new THREE.DirectionalLight(0xc4b49a, 0.28);
-    fill.position.set(2.2, 1.8, 3.0);
-    scene.add(fill);
+    ambLight = new THREE.AmbientLight(0x8a9692, 0.78);
+    scene.add(ambLight);
+    fluoLight = new THREE.DirectionalLight(0xe7f3ef, 0.95);
+    fluoLight.position.set(-0.6, 5.4, 2.1);
+    scene.add(fluoLight);
+    fillLight = new THREE.DirectionalLight(0xc4b49a, 0.28);
+    fillLight.position.set(2.2, 1.8, 3.0);
+    scene.add(fillLight);
 
     buildRoom();
     buildPOS();
@@ -477,6 +479,40 @@ window.PosRig = (function () {
     },
     setPrintingProgress(head, used) {
       if (typeof head === "number") mapPrint(head, used);
+    },
+    setShift(name) {
+      const table = {
+        night: { bg: 0x14181c, amb: 0.78, fluo: 0.95 },
+        late: { bg: 0x0c1014, amb: 0.46, fluo: 0.62 },
+        dawn: { bg: 0x1c1814, amb: 0.72, fluo: 0.8 },
+        day: { bg: 0x243038, amb: 1.05, fluo: 1.1 },
+        dusk: { bg: 0x18141a, amb: 0.82, fluo: 0.88 },
+      };
+      const s = table[name] || table.night;
+      if (scene) {
+        scene.background.setHex(s.bg);
+        scene.fog.color.setHex(s.bg);
+      }
+      if (ambLight) ambLight.intensity = s.amb;
+      if (fluoLight) fluoLight.intensity = s.fluo;
+    },
+    flicker(times, done) {
+      let n = 0;
+      const max = times || 7;
+      const tick = () => {
+        if (!ambLight) { if (done) done(); return; }
+        ambLight.intensity = n % 2 === 0 ? 0.12 : 0.7;
+        fluoLight.intensity = n % 2 === 0 ? 0.08 : 0.5;
+        n += 1;
+        if (n > max) {
+          ambLight.intensity = 0.18;
+          fluoLight.intensity = 0.15;
+          if (done) done();
+        } else {
+          setTimeout(tick, 70 + (n % 3) * 40);
+        }
+      };
+      tick();
     },
   };
 })();

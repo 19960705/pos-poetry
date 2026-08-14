@@ -42,7 +42,7 @@
     <footer class="hint-dock">
       <div>
         <span class="desk-only">键盘输入金额，<kbd>Enter</kbd> 出票，左右拖过刷卡槽。<kbd>Esc</kbd> 作废。</span>
-        <span class="desk-only"> 特殊金额会换诗：0.01 / 6.66 / 8.88 / 13.14 / 18.80 / 52.00 / 99.99</span>
+        <span class="desk-only"> 把一张真小票 <kbd>Ctrl+V</kbd> 贴进来。点小票可带走链接。</span>
       </div>
       <div class="actions">
         <button class="ghost" id="btn-mute" type="button" aria-pressed="false">声音 开</button>
@@ -69,7 +69,8 @@
       </div>
       <div class="paper-tools">
         <button class="ghost" id="btn-keep" type="button">撕下收好</button>
-        <button class="ghost" id="btn-drop" type="button">扔进抽屉</button>
+        <button class="ghost" id="btn-share" type="button">带走链接</button>
+        <button class="ghost" id="btn-save" type="button">存成图片</button>
       </div>
     </div>
   </div>
@@ -77,16 +78,27 @@
   <aside id="drawer" aria-hidden="true">
     <header>
       已撕小票
-      <span id="drawer-meta">热敏字三个月后变淡，请尽快读。</span>
+      <span id="drawer-meta">热敏字会自己变淡。请尽快读。</span>
     </header>
     <div id="stash">
       <p class="stash-empty">柜台抽屉是空的。出一张票，再撕下来。</p>
     </div>
   </aside>
 
+  <div id="closed">
+    <div class="boot-screen">
+      <div class="brand">FISCAL POS / POET MODULE</div>
+      <h2>已打烊</h2>
+      <div class="boot-log">门开着。机还热着。<br />纸卷已尽。明日再来。</div>
+      <button class="ghost" id="btn-reopen" type="button">再值一班</button>
+    </div>
+  </div>
+  <div id="toast" role="status"></div>
+
   <script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
   <script src="js/poems.js"></script>
+  <script src="js/memory.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/receipt-p5.js"></script>
   <script src="js/pos-three.js"></script>
