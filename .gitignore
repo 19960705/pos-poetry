@@ -1,0 +1,5 @@
+node_modules/
+recordings/page@*.webm
+recordings/demo-events.json
+.DS_Store
+*.log

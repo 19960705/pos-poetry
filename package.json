@@ -1,0 +1,11 @@
+{
+  "name": "pos-poetry",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "demo": "node scripts/record-demo.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.62.1"
+  }
+}

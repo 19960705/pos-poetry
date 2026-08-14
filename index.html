@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>夜班诗铺 · POS机里的诗歌</title>
+  <meta name="description" content="一台夜班收银机。你输入金额，它打印没说出口的话。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Share+Tech+Mono&family=ZCOOL+QingKe+HuangYou&family=Zhi+Mang+Xing&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="three-root" aria-hidden="true"></div>
+  <div id="receipt-host" aria-hidden="true"></div>
+  <div id="grain"></div>
+  <div id="vignette"></div>
+
+  <div id="boot">
+    <div class="boot-screen">
+      <div class="brand">FISCAL POS / POET MODULE</div>
+      <h2>夜班诗铺  TERMINAL</h2>
+      <div class="boot-log" id="boot-log"></div>
+      <div class="boot-cta">按任意键进入柜台</div>
+    </div>
+  </div>
+
+  <div id="hud">
+    <header class="store-mark">
+      <div>
+        <h1>夜班诗铺</h1>
+        <p>POS 机里的诗歌</p>
+      </div>
+      <div class="clock-col">
+        <div class="time" id="clock">02:17:08</div>
+        <div class="shift" id="shift">夜班中 · 终端 POET-0217</div>
+      </div>
+    </header>
+
+    <div></div>
+
+    <footer class="hint-dock">
+      <div>
+        <span class="desk-only">键盘输入金额，<kbd>Enter</kbd> 出票，左右拖过刷卡槽。<kbd>Esc</kbd> 作废。</span>
+        <span class="desk-only"> 特殊金额会换诗：0.01 / 6.66 / 8.88 / 13.14 / 18.80 / 52.00 / 99.99</span>
+      </div>
+      <div class="actions">
+        <button class="ghost" id="btn-mute" type="button" aria-pressed="false">声音 开</button>
+        <button class="ghost" id="btn-swipe" type="button">模拟刷卡</button>
+        <button class="ghost" id="btn-drawer" type="button">已撕小票 0</button>
+      </div>
+    </footer>
+  </div>
+
+  <div id="pad" aria-label="收银键盘">
+    <button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button><button class="bad" data-k="void">作废</button>
+    <button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button><button class="warn" data-k="clr">清除</button>
+    <button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button><button class="ok" data-k="ok">确认</button>
+    <button data-k="0">0</button><button data-k=".">.</button><button data-k="00">00</button><button data-k="card">刷卡</button>
+  </div>
+
+  <div id="paper-stage">
+    <div class="dim" id="paper-dim"></div>
+    <div>
+      <div id="live-receipt">
+        <div class="serration top"></div>
+        <canvas id="receipt-view" width="384" height="900"></canvas>
+        <div class="serration bot"></div>
+      </div>
+      <div class="paper-tools">
+        <button class="ghost" id="btn-keep" type="button">撕下收好</button>
+        <button class="ghost" id="btn-drop" type="button">扔进抽屉</button>
+      </div>
+    </div>
+  </div>
+
+  <aside id="drawer" aria-hidden="true">
+    <header>
+      已撕小票
+      <span id="drawer-meta">热敏字三个月后变淡，请尽快读。</span>
+    </header>
+    <div id="stash">
+      <p class="stash-empty">柜台抽屉是空的。出一张票，再撕下来。</p>
+    </div>
+  </aside>
+
+  <script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+  <script src="js/poems.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/receipt-p5.js"></script>
+  <script src="js/pos-three.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
